@@ -1,22 +1,39 @@
 package extensions
 
 import (
-	"fmt"
+	"encoding/json"
 	"net/http"
+
+	"github.com/YagoFerreira39/go-bookclub/src/adapters/data_types/requests"
+	"github.com/YagoFerreira39/go-bookclub/src/domain/entities"
+	"github.com/YagoFerreira39/go-bookclub/src/domain/models"
 )
 
-type CreateBookExtension struct{}
+func FromRouterRequestToRequest(request *http.Request) (requests.CreateBookRequest, error) {
+	var createBookRequest requests.CreateBookRequest
+	error := json.NewDecoder(request.Body).Decode(&createBookRequest)
 
-func FromRouterRequestToRequest(req *http.Request ) {
-	body := req.Body
+	return createBookRequest, error
+}
 
-	fmt.Println(body)
+func FromRequestToEntity(request requests.CreateBookRequest) entities.BookEntity {
+	entity := entities.BookEntity{
+		Name:      request.Name,
+		Author:    request.Author,
+		ISBN:      request.ISBN,
+		Published: request.Published,
+	}
 
-	// request := requests.CreateBookRequest{
-	// 	Name: body.Name,
-	// 	Author: body.Author,
-	// 	ISBN: body.ISBN,
-	// 	Published: body.Published,
-	// }
+	return entity
+}
 
+func FromEntityToModel(entity entities.BookEntity) models.BookModel {
+	model := models.BookModel{
+		Name:      entity.Name,
+		Author:    entity.Author,
+		ISBN:      entity.ISBN,
+		Published: entity.Published,
+	}
+
+	return model
 }
