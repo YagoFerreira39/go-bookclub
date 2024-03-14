@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+  book-club-mongodb:
+    image: mongo:latest
+    container_name: book-club-mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data_container:/data/db
+  
+  # app:
+  #   build: .
+  #   ports:
+  #     - "8001:8080"
+  #   command: go run ./cmd/main/main.go
+  #   depends_on:
+  #     - book-club-mongodb
+
+volumes:
+  mongodb_data_container:
