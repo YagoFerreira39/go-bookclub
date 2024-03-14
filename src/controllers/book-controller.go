@@ -33,7 +33,7 @@ func (controller *BookController) CreateBook(responseWriter http.ResponseWriter,
 		return
 	}
 
-	response, _ := json.Marshal(useCaseResponse)
+	response, _ := json.Marshal(createBookExtension.FromDtoToResponse(useCaseResponse))
 
 	// Handle successful book creation
 	responseWriter.Header().Set("Content-Type", "pkglication/json")

@@ -8,6 +8,9 @@ import (
 	"github.com/YagoFerreira39/go-bookclub/src/domain/models"
 	dtos "github.com/YagoFerreira39/go-bookclub/src/use_cases/data_types/dtos/book"
 	requests "github.com/YagoFerreira39/go-bookclub/src/use_cases/data_types/requests/book"
+	"github.com/YagoFerreira39/go-bookclub/src/use_cases/data_types/responses"
+	book_responses "github.com/YagoFerreira39/go-bookclub/src/use_cases/data_types/responses/book"
+	"github.com/YagoFerreira39/go-bookclub/src/use_cases/data_types/responses/payload"
 )
 
 type CreateBookExtension struct {
@@ -52,4 +55,23 @@ func (createBookExtension *CreateBookExtension) FromModelToDto(model models.Book
 	}
 
 	return dto
+}
+
+func (createBookExtension *CreateBookExtension) FromDtoToResponse(dto *dtos.CreateBookDto) book_responses.CreateBookResponse {
+	response := book_responses.CreateBookResponse{
+		BaseApiResponse: responses.BaseApiResponse{
+			Status:    true,
+			ErrorCode: 0,
+			Message:   "Book create successfully.",
+		},
+		Payload: payload.CreateBookResponsePayload{
+			Id_:       dto.Id_,
+			Name:      dto.Name,
+			Author:    dto.Author,
+			ISBN:      dto.ISBN,
+			Published: dto.Published,
+		},
+	}
+
+	return response
 }
