@@ -42,3 +42,20 @@ func (repository *BookRepository) CreateBook(model models.BookModel) (models.Boo
 
 	return model, nil
 }
+
+func (repository *BookRepository) GetBookById(bookId string) (models.BookModel, error) {
+	client := repository.MongoDBInfrastructure.GetMongoDBClient()
+	ctx := repository.MongoDBInfrastructure.GetContext()
+	collection := client.Database("BookClub").Collection("Books")
+
+	var modelResult models.BookModel
+	docId, _ := primitive.ObjectIDFromHex(bookId)
+	filter := bson.M{"_id": docId}
+
+	error := collection.FindOne(ctx, filter).Decode(&modelResult)
+	if error != nil {
+		log.Println("Fail to retrieve book from database.")
+	}
+
+	return modelResult, error
+}
