@@ -35,7 +35,6 @@ func (controller *BookController) CreateBook(responseWriter http.ResponseWriter,
 
 	response, _ := json.Marshal(createBookExtension.FromDtoToResponse(useCaseResponse))
 
-	// Handle successful book creation
 	responseWriter.Header().Set("Content-Type", "pkglication/json")
 	responseWriter.WriteHeader(http.StatusCreated)
 	responseWriter.Write(response)
@@ -43,15 +42,15 @@ func (controller *BookController) CreateBook(responseWriter http.ResponseWriter,
 
 func (controller *BookController) GetBookById(responseWriter http.ResponseWriter, request *http.Request) {
 	getBookByIdExtension := &extensions.GetBookByIdExtension{}
-	getBookByIdUseCase := book.GetBookByIdUseCase {
+	getBookByIdUseCase := book.GetBookByIdUseCase{
 		GetBookByIdExtension: getBookByIdExtension,
-		BookRepository: controller.BookRepository,
+		BookRepository:       controller.BookRepository,
 	}
 
 	getBookByIdRequest := getBookByIdExtension.FromRouterRequestToRequest(request)
 
 	useCaseResponse, error := getBookByIdUseCase.GetBookById(getBookByIdRequest)
-	
+
 	if error != nil {
 		http.Error(responseWriter, "Unable to find book.", http.StatusInternalServerError)
 		fmt.Println("Error:", error)
@@ -60,8 +59,7 @@ func (controller *BookController) GetBookById(responseWriter http.ResponseWriter
 
 	response, _ := json.Marshal(getBookByIdExtension.FromDtoToResponse(useCaseResponse))
 
-	// Handle successful book creation
 	responseWriter.Header().Set("Content-Type", "pkglication/json")
-	responseWriter.WriteHeader(http.StatusCreated)
+	responseWriter.WriteHeader(http.StatusOK)
 	responseWriter.Write(response)
 }

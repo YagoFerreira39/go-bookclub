@@ -13,5 +13,5 @@ var bookController = controllers.BookController{BookRepository: &bookRepository}
 
 var RegisterBookClubRoutes = func(router *mux.Router) {
 	router.HandleFunc("/book/", bookController.CreateBook).Methods("POST")
-	router.HandleFunc("/book/", bookController.GetBookById).Methods("GET")
+	router.HandleFunc("/book/{bookId}", bookController.GetBookById).Methods("GET")
 }

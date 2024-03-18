@@ -16,14 +16,14 @@ import (
 type CreateBookExtension struct {
 }
 
-func (createBookExtension *CreateBookExtension) FromRouterRequestToRequest(request *http.Request) (requests.CreateBookRequest, error) {
+func (createBookExtension *CreateBookExtension) FromRouterRequestToRequest(request *http.Request) (*requests.CreateBookRequest, error) {
 	var createBookRequest requests.CreateBookRequest
 	error := json.NewDecoder(request.Body).Decode(&createBookRequest)
 
-	return createBookRequest, error
+	return &createBookRequest, error
 }
 
-func (createBookExtension *CreateBookExtension) FromRequestToEntity(request requests.CreateBookRequest) entities.BookEntity {
+func (createBookExtension *CreateBookExtension) FromRequestToEntity(request *requests.CreateBookRequest) *entities.BookEntity {
 	entity := entities.BookEntity{
 		Name:      request.Name,
 		Author:    request.Author,
@@ -31,10 +31,10 @@ func (createBookExtension *CreateBookExtension) FromRequestToEntity(request requ
 		Published: request.Published,
 	}
 
-	return entity
+	return &entity
 }
 
-func (createBookExtension *CreateBookExtension) FromEntityToModel(entity entities.BookEntity) models.BookModel {
+func (createBookExtension *CreateBookExtension) FromEntityToModel(entity *entities.BookEntity) *models.BookModel {
 	model := models.BookModel{
 		Name:      entity.Name,
 		Author:    entity.Author,
@@ -42,10 +42,10 @@ func (createBookExtension *CreateBookExtension) FromEntityToModel(entity entitie
 		Published: entity.Published,
 	}
 
-	return model
+	return &model
 }
 
-func (createBookExtension *CreateBookExtension) FromModelToDto(model models.BookModel) dtos.CreateBookDto {
+func (createBookExtension *CreateBookExtension) FromModelToDto(model *models.BookModel) *dtos.CreateBookDto {
 	dto := dtos.CreateBookDto{
 		Id_:       model.ID.Hex(),
 		Name:      model.Name,
@@ -54,10 +54,10 @@ func (createBookExtension *CreateBookExtension) FromModelToDto(model models.Book
 		Published: model.Published,
 	}
 
-	return dto
+	return &dto
 }
 
-func (createBookExtension *CreateBookExtension) FromDtoToResponse(dto *dtos.CreateBookDto) book_responses.CreateBookResponse {
+func (createBookExtension *CreateBookExtension) FromDtoToResponse(dto *dtos.CreateBookDto) *book_responses.CreateBookResponse {
 	response := book_responses.CreateBookResponse{
 		BaseApiResponse: responses.BaseApiResponse{
 			Status:    true,
@@ -73,5 +73,5 @@ func (createBookExtension *CreateBookExtension) FromDtoToResponse(dto *dtos.Crea
 		},
 	}
 
-	return response
+	return &response
 }

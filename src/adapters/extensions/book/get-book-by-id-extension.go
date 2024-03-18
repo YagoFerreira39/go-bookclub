@@ -25,7 +25,7 @@ func (getBookByIdExtension *GetBookByIdExtension) FromRouterRequestToRequest(req
 	return &getBookByIdRequest
 }
 
-func (getBookByIdExtension *GetBookByIdExtension) FromModelToDto(model *models.BookModel) dtos.BookDto {
+func (getBookByIdExtension *GetBookByIdExtension) FromModelToDto(model *models.BookModel) *dtos.BookDto {
 	dto := dtos.BookDto{
 		Id_:       model.ID.Hex(),
 		Name:      model.Name,
@@ -34,10 +34,10 @@ func (getBookByIdExtension *GetBookByIdExtension) FromModelToDto(model *models.B
 		Published: model.Published,
 	}
 
-	return dto
+	return &dto
 }
 
-func (getBookByIdExtension *GetBookByIdExtension) FromDtoToResponse(dto *dtos.BookDto) book_responses.GetBookByIdResponse {
+func (getBookByIdExtension *GetBookByIdExtension) FromDtoToResponse(dto *dtos.BookDto) *book_responses.GetBookByIdResponse {
 	response := book_responses.GetBookByIdResponse{
 		BaseApiResponse: responses.BaseApiResponse{
 			Status:    true,
@@ -53,5 +53,5 @@ func (getBookByIdExtension *GetBookByIdExtension) FromDtoToResponse(dto *dtos.Bo
 		},
 	}
 
-	return response
+	return &response
 }

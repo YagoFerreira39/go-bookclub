@@ -23,18 +23,20 @@ func (getBookByIdUseCase *GetBookByIdUseCase) GetBookById(request *requests.GetB
 	return dto, error
 }
 
+// Private methods
 func (getBookByIdUseCase *GetBookByIdUseCase) getBookById(bookId string) (*models.BookModel, error) {
 	bookModelFromDatabase, error := getBookByIdUseCase.BookRepository.GetBookById(bookId)
 
 	if error != nil {
 		log.Printf("Unable to find book.")
+		return &models.BookModel{}, error
 	}
 
-	return &bookModelFromDatabase, nil
+	return bookModelFromDatabase, nil
 }
 
 func (getBookByIdUseCase *GetBookByIdUseCase) createBookDto(bookModelFromDatabase *models.BookModel) *dtos.BookDto {
 	dto := getBookByIdUseCase.GetBookByIdExtension.FromModelToDto(bookModelFromDatabase)
 
-	return &dto
+	return dto
 }

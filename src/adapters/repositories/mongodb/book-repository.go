@@ -13,7 +13,7 @@ type BookRepository struct {
 	MongoDBInfrastructure *mongodb.MongoDBInfrastructure
 }
 
-func (repository *BookRepository) CreateBook(model models.BookModel) (models.BookModel, error) {
+func (repository *BookRepository) CreateBook(model *models.BookModel) (*models.BookModel, error) {
 	client := repository.MongoDBInfrastructure.GetMongoDBClient()
 	ctx := repository.MongoDBInfrastructure.GetContext()
 	collection := client.Database("BookClub").Collection("Books")
@@ -43,7 +43,7 @@ func (repository *BookRepository) CreateBook(model models.BookModel) (models.Boo
 	return model, nil
 }
 
-func (repository *BookRepository) GetBookById(bookId string) (models.BookModel, error) {
+func (repository *BookRepository) GetBookById(bookId string) (*models.BookModel, error) {
 	client := repository.MongoDBInfrastructure.GetMongoDBClient()
 	ctx := repository.MongoDBInfrastructure.GetContext()
 	collection := client.Database("BookClub").Collection("Books")
@@ -57,5 +57,5 @@ func (repository *BookRepository) GetBookById(bookId string) (models.BookModel, 
 		log.Println("Fail to retrieve book from database.")
 	}
 
-	return modelResult, error
+	return &modelResult, error
 }
