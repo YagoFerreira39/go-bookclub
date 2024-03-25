@@ -27,7 +27,7 @@ func (getBookByIdExtension *GetBookByIdExtension) FromRouterRequestToRequest(req
 
 func (getBookByIdExtension *GetBookByIdExtension) FromModelToDto(model *models.BookModel) *dtos.BookDto {
 	dto := dtos.BookDto{
-		Id_:       model.ID.Hex(),
+		ID:        model.ID,
 		Name:      model.Name,
 		Author:    model.Author,
 		ISBN:      model.ISBN,
@@ -45,7 +45,7 @@ func (getBookByIdExtension *GetBookByIdExtension) FromDtoToResponse(dto *dtos.Bo
 			Message:   "Book find with success.",
 		},
 		Payload: payload.GetBookByIdResponsePayload{
-			Id_:       dto.Id_,
+			ID:        dto.ID,
 			Name:      dto.Name,
 			Author:    dto.Author,
 			ISBN:      dto.ISBN,

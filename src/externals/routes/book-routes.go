@@ -1,14 +1,14 @@
 package routes
 
 import (
-	book_repository "github.com/YagoFerreira39/go-bookclub/src/adapters/repositories/mongodb"
+	book_repository_dynamodb "github.com/YagoFerreira39/go-bookclub/src/adapters/repositories/dynamodb"
 	"github.com/YagoFerreira39/go-bookclub/src/controllers"
-	"github.com/YagoFerreira39/go-bookclub/src/externals/infrastructure/mongodb"
+	awsdynamodb "github.com/YagoFerreira39/go-bookclub/src/externals/infrastructure/aws-dynamodb"
 	"github.com/gorilla/mux"
 )
 
-var mongoDBInfrastructure, _ = mongodb.NewMongoDBInfrastructure()
-var bookRepository = book_repository.BookRepository{MongoDBInfrastructure: mongoDBInfrastructure}
+var dynamoDBInfrastructure = awsdynamodb.NewDynamoDBInfrastructure()
+var bookRepository = book_repository_dynamodb.BookRepository{DynamoDBInfrastructure: dynamoDBInfrastructure}
 var bookController = controllers.BookController{BookRepository: &bookRepository}
 
 var RegisterBookClubRoutes = func(router *mux.Router) {

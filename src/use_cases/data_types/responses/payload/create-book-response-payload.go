@@ -1,7 +1,7 @@
 package payload
 
 type CreateBookResponsePayload struct {
-	Id_       string  `json:"Id_"`
+	ID        string  `json:"ID"`
 	Name      string  `json:"Name"`
 	Author    string  `json:"Author"`
 	ISBN      string  `json:"ISBN"`

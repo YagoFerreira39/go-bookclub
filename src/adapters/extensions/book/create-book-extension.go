@@ -13,8 +13,7 @@ import (
 	"github.com/YagoFerreira39/go-bookclub/src/use_cases/data_types/responses/payload"
 )
 
-type CreateBookExtension struct {
-}
+type CreateBookExtension struct{}
 
 func (createBookExtension *CreateBookExtension) FromRouterRequestToRequest(request *http.Request) (*requests.CreateBookRequest, error) {
 	var createBookRequest requests.CreateBookRequest
@@ -24,14 +23,9 @@ func (createBookExtension *CreateBookExtension) FromRouterRequestToRequest(reque
 }
 
 func (createBookExtension *CreateBookExtension) FromRequestToEntity(request *requests.CreateBookRequest) *entities.BookEntity {
-	entity := entities.BookEntity{
-		Name:      request.Name,
-		Author:    request.Author,
-		ISBN:      request.ISBN,
-		Published: request.Published,
-	}
+	entity := entities.NewBookEntity(nil, request.Name, request.Author, request.ISBN, request.Published)
 
-	return &entity
+	return entity
 }
 
 func (createBookExtension *CreateBookExtension) FromEntityToModel(entity *entities.BookEntity) *models.BookModel {
@@ -47,7 +41,7 @@ func (createBookExtension *CreateBookExtension) FromEntityToModel(entity *entiti
 
 func (createBookExtension *CreateBookExtension) FromModelToDto(model *models.BookModel) *dtos.CreateBookDto {
 	dto := dtos.CreateBookDto{
-		Id_:       model.ID.Hex(),
+		ID:        model.ID,
 		Name:      model.Name,
 		Author:    model.Author,
 		ISBN:      model.ISBN,
@@ -65,7 +59,7 @@ func (createBookExtension *CreateBookExtension) FromDtoToResponse(dto *dtos.Crea
 			Message:   "Book create successfully.",
 		},
 		Payload: payload.CreateBookResponsePayload{
-			Id_:       dto.Id_,
+			ID:        dto.ID,
 			Name:      dto.Name,
 			Author:    dto.Author,
 			ISBN:      dto.ISBN,

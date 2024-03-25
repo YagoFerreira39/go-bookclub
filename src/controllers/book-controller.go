@@ -6,12 +6,12 @@ import (
 	"net/http"
 
 	extensions "github.com/YagoFerreira39/go-bookclub/src/adapters/extensions/book"
-	book_repository "github.com/YagoFerreira39/go-bookclub/src/adapters/repositories/mongodb"
+	book_repository_dynamodb "github.com/YagoFerreira39/go-bookclub/src/adapters/repositories/dynamodb"
 	"github.com/YagoFerreira39/go-bookclub/src/use_cases/book"
 )
 
 type BookController struct {
-	BookRepository *book_repository.BookRepository
+	BookRepository *book_repository_dynamodb.BookRepository
 }
 
 func (controller *BookController) CreateBook(responseWriter http.ResponseWriter, request *http.Request) {

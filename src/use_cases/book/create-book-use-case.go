@@ -4,7 +4,7 @@ import (
 	"log"
 
 	extensions "github.com/YagoFerreira39/go-bookclub/src/adapters/extensions/book"
-	book_repository "github.com/YagoFerreira39/go-bookclub/src/adapters/repositories/mongodb"
+	book_repository_dynamodb "github.com/YagoFerreira39/go-bookclub/src/adapters/repositories/dynamodb"
 	"github.com/YagoFerreira39/go-bookclub/src/domain/entities"
 	"github.com/YagoFerreira39/go-bookclub/src/domain/models"
 	dtos "github.com/YagoFerreira39/go-bookclub/src/use_cases/data_types/dtos/book"
@@ -13,7 +13,7 @@ import (
 
 type CreateBookUseCase struct {
 	CreateBookExtension *extensions.CreateBookExtension
-	BookRepository      *book_repository.BookRepository
+	BookRepository      *book_repository_dynamodb.BookRepository
 }
 
 func (createBookUseCase *CreateBookUseCase) CreateBook(request *requests.CreateBookRequest) (*dtos.CreateBookDto, error) {

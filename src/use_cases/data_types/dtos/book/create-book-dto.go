@@ -1,7 +1,7 @@
 package dtos
 
 type CreateBookDto struct {
-	Id_       string
+	ID       string
 	Name      string
 	Author    string
 	ISBN      string

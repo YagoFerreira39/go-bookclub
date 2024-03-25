@@ -2,7 +2,6 @@ package extensions
 
 import (
 	"github.com/YagoFerreira39/go-bookclub/src/domain/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type BookExtension struct{}
@@ -25,9 +24,8 @@ func (bookExtension *BookExtension) FromDatabaseResultToModelList(resultList []m
 }
 
 func (bookExtension *BookExtension) createBookModel(result map[string]interface{}) models.BookModel {
-	id, _ := primitive.ObjectIDFromHex(result["_id"].(string))
 	model := models.BookModel{
-		ID:        &id,
+		ID:        result["id"].(string),
 		Name:      result["name"].(string),
 		Author:    result["author"].(string),
 		ISBN:      result["isbn"].(string),
